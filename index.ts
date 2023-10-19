@@ -3,38 +3,42 @@ import { VectraManager } from './src/vectraManager';
 (async () => {
   const vectraManager = new VectraManager();
 
-  // Adicione informações sobre os equipamentos
-  await vectraManager.addItem(JSON.stringify({
-    name: 'Máquina de Lavar',
-    category: 'Eletrodomésticos',
-    price: 599.99,
-  }));
+  // Adicione postagens de blog
+  await vectraManager.addItem('Dicas para produtividade no trabalho');
+  await vectraManager.addItem('Novidades em tecnologia');
+  await vectraManager.addItem('Maçã');
+  await vectraManager.addItem('Abelha');
+  await vectraManager.addItem('Paulo é doutor em ciencia da computação');
 
-  await vectraManager.addItem(JSON.stringify({
-    name: 'Furadeira Elétrica',
-    category: 'Ferramentas',
-    price: 129.99,
-  }));
-
-  // Consulta por máquina de lavar
-  const resultsLavar = await vectraManager.query('Máquina de Lavar');
-  if (resultsLavar.length > 0) {
-    for (const result of resultsLavar) {
-      const item = result.item.metadata;
-      console.log(`[${result.score}] Nome: ${item.name}, Categoria: ${item.category}, Preço: $${item.price}`);
+  // Consulta por postagens de blog
+  const resultsProdutividade = await vectraManager.query('Dicas para produtividade no trabalho');
+  if (resultsProdutividade.length > 0) {
+    for (const result of resultsProdutividade) {
+      const post = result.item;
+      console.log(`Postagem: ${post.metadata.text} | ${post.norm}`);
     }
   } else {
-    console.log('Nenhum resultado encontrado para "Máquina de Lavar".');
+    console.log('Nenhuma postagem encontrada para "Dicas para produtividade no trabalho".');
   }
 
-  // Consulta por equipamentos de ferramentas
-  const resultsFerramentas = await vectraManager.query('Ferramentas');
-  if (resultsFerramentas.length > 0) {
-    for (const result of resultsFerramentas) {
-      const item = result.item.metadata;
-      console.log(`[${result.score}] Nome: ${item.name}, Categoria: ${item.category}, Preço: $${item.price}`);
+  // Consulta por postagens de blog
+  const resultsTecnologia = await vectraManager.query('Novidades em tecnologia');
+  if (resultsTecnologia.length > 0) {
+    for (const result of resultsTecnologia) {
+      const post = result.item;
+      console.log(`Postagem: ${post.metadata.text} | ${post.norm}`);
     }
   } else {
-    console.log('Nenhum resultado encontrado para "Ferramentas".');
+    console.log('Nenhuma postagem encontrada para "Novidades em tecnologia".');
+  }
+  
+  const paulo = await vectraManager.query('Paulo');
+  if (paulo.length > 0) {
+    for (const result of paulo) {
+      const post = result.item;
+      console.log(`Postagem: ${post.metadata.text} | ${post.norm}`);
+    }
+  } else {
+    console.log('Nenhuma postagem encontrada para "Paulo".');
   }
 })();
